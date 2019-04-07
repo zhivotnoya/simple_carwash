@@ -12,6 +12,18 @@ vehicleWashStation = {
 	{1362.5385, 3592.1274, 33.9211}
 }
 
+function scw_DrawSubtitleTimed(m_text, showtime)
+	SetTextEntry_2('STRING')
+	AddTextComponentString(m_text)
+	DrawSubtitleTimed(showtime, 1)
+end
+
+function scw_DrawNotification(m_text)
+	SetNotificationTextEntry('STRING')
+	AddTextComponentString(m_text)
+	DrawNotification(true, false)
+end
+
 Citizen.CreateThread(function ()
     Citizen.Wait(0)
 	for i = 1, #vehicleWashStation do
@@ -31,12 +43,13 @@ Citizen.CreateThread(function()
                 garageCoords2 = vehicleWashStation[i]
                 DrawMarker(1, garageCoords2[1], garageCoords2[2], garageCoords2[3], 0, 0, 0, 0, 0, 0, 5.0, 5.0, 2.0, 0, 157, 0, 155, 0, 0, 2, 0, 0, 0, 0)
                 if GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), garageCoords2[1], garageCoords2[2], garageCoords2[3], true ) < 5 then
-			if IsControlJustPressed(1, Key) then
-				WashDecalsFromVehicle(GetVehiclePedIsUsing(GetPlayerPed(-1)), 1.0)
-                        	SetVehicleDirtLevel(GetVehiclePedIsUsing(GetPlayerPed(-1)))
-				TriggerEvent('chatMessage', "CARWASH", {200,0,0} , "Car washed for Free!")
-                        end
-		end
+                    scw_DrawSubtitleTimed("Press [~g~ENTER~s~] to wash your vehicle!")
+                    if IsControlJustPressed(1, Key) then
+                        WashDecalsFromVehicle(GetVehiclePedIsUsing(GetPlayerPed(-1)), 1.0)
+                        SetVehicleDirtLevel(GetVehiclePedIsUsing(GetPlayerPed(-1)))
+                        TriggerEvent('chatMessage', "CARWASH", {200,200,0} , "Car washed for Free!")
+                    end
+                end
             end
         end
     end
