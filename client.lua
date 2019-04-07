@@ -34,6 +34,7 @@ Citizen.CreateThread(function()
 			if IsControlJustPressed(1, Key) then
 				WashDecalsFromVehicle(GetVehiclePedIsUsing(GetPlayerPed(-1)), 1.0)
                         	SetVehicleDirtLevel(GetVehiclePedIsUsing(GetPlayerPed(-1)))
+				TriggerEvent('chatMessage', "CARWASH", {200,0,0} , "Car washed for Free!")
                         end
 		end
             end
